@@ -10,6 +10,10 @@ Lead Maintainer: [DomenicoPizzata](https://github.com/DomenicoPizzata)
 
 It relies on `cache` being defined in the server.
 
+It allows different options for user-path configuration in terms of time (seconds, minutes, hours, days).
+
+
+
 ## Use
 
 ```javascript
@@ -40,10 +44,22 @@ Defaults are given here
 - `pathCache`: Object with the following properties:
 	- `segment`: `hapi-multi-rate-limit-path` Name of the cache segment to use for storing path rate limit info
 	- `expiresIn`: `60000` Time (in milliseconds) of period for `pathLimit`
-- `userPathLimit`: `false` number of total requests that can be made on a given path per user per period.  Set to `false` to disable limiting requests per path per user.
-- `userPathCache`: Object with the following properties:
-	- `segment`: `hapi-multi-rate-limit-userPath` Name of the cache segment to use for storing userPath rate limit info
-	- `expiresIn`: `60000` Time (in milliseconds) of period for `userPathLimit`
+- `userPathLimitSeconds`: `false` number of total requests that can be made on a given path per user per period (seconds).  Set to `false` to disable limiting requests per path per user.
+- `userPathLimitMinutes`: `false` number of total requests that can be made on a given path per user per period (minutes).  Set to `false` to disable limiting requests per path per user.
+- `userPathLimitHours`: `false` number of total requests that can be made on a given path per user per period (hours).  Set to `false` to disable limiting requests per path per user.
+- `userPathLimitDays`: `false` number of total requests that can be made on a given path per user per period (days).  Set to `false` to disable limiting requests per path per user.
+- `userPathCacheSeconds`: Object with the following properties:
+	- `segment`: `hapi-multi-rate-limit-userPathSeconds` Name of the cache segment to use for storing userPath rate limit info
+	- `expiresIn`: `1000` Time (in milliseconds) of period for `userPathLimitSeconds`
+- `userPathCacheMinutes`: Object with the following properties:
+	- `segment`: `hapi-multi-rate-limit-userPathMinutes` Name of the cache segment to use for storing userPath rate limit info
+	- `expiresIn`: `60000` Time (in milliseconds) of period for `userPathLimitMinutes`
+- `userPathCacheHours`: Object with the following properties:
+	- `segment`: `hapi-multi-rate-limit-userPathHours` Name of the cache segment to use for storing userPath rate limit info
+	- `expiresIn`: `3600000` Time (in milliseconds) of period for `userPathLimitHours`
+- `userPathCacheDays`: Object with the following properties:
+	- `segment`: `hapi-multi-rate-limit-userPathDays` Name of the cache segment to use for storing userPath rate limit info
+	- `expiresIn`: `86400000` Time (in milliseconds) of period for `userPathLimitDays`
 - `headers`: `true` Whether or not to include headers in responses
 - `ipWhitelist`: `[]` array of IPs for whom to bypass rate limiting.  Note that a whitelisted IP would also bypass restrictions an authenticated user would otherwise have.
 - `trustProxy`: `false` If true, honor the `X-Forwarded-For` header.  See note below.
@@ -75,9 +91,18 @@ The following headers will be included in server responses if their respective l
 - `x-ratelimit-userlimit`: Will equal `userLimit`
 - `x-ratelimit-userremaining`: Remaining number of requests user has this period
 - `x-ratelimit-userreset`: Time (in milliseconds) until reset of `userLimit` period
-- `x-ratelimit-userpathlimit`: Will equal `userPathLimit`
-- `x-ratelimit-userpathremaining`: Remaining number of requests user has this period for this path
-- `x-ratelimit-userpathreset`: Time (in milliseconds) until reset of `userPathLimit` period
+- `x-ratelimit-userpathlimit-seconds`: Will equal `userPathLimitSeconds`
+- `x-ratelimit-userpathremaining-seconds`: Remaining number of requests user has this period for this path
+- `x-ratelimit-userpathreset-seconds`: Time (in milliseconds) until reset of `userPathLimitSeconds` period
+- `x-ratelimit-userpathlimit-minutes`: Will equal `userPathLimitMinutes`
+- `x-ratelimit-userpathremaining-minutes`: Remaining number of requests user has this period for this path
+- `x-ratelimit-userpathreset-minutes`: Time (in milliseconds) until reset of `userPathLimitMinutes` period
+- `x-ratelimit-userpathlimit-hours`: Will equal `userPathLimitHours`
+- `x-ratelimit-userpathremaining-hours`: Remaining number of requests user has this period for this path
+- `x-ratelimit-userpathreset-hours`: Time (in milliseconds) until reset of `userPathLimitHours` period
+- `x-ratelimit-userpathlimit-days`: Will equal `userPathLimitDays`
+- `x-ratelimit-userpathremaining-days`: Remaining number of requests user has this period for this path
+- `x-ratelimit-userpathreset-days`: Time (in milliseconds) until reset of `userPathLimitDays` period
 
 ## Per-route settings
 
