@@ -1,12 +1,12 @@
-# hapi-rate-limit
+# hapi-multi-rate-limit
 
-[![Build Status](https://travis-ci.org/wraithgar/hapi-rate-limit.svg?branch=master)](http://travis-ci.org/wraithgar/hapi-rate-limit)
+[![Build Status](https://travis-ci.org/Ubiatar/hapi-multi-rate-limit.svg?branch=master)](http://travis-ci.org/Ubiatar/hapi-multi-rate-limit)
 
-Lead Maintainer: [Gar](https://github.com/wraithgar)
+Lead Maintainer: [DomenicoPizzata](https://github.com/DomenicoPizzata)
 
 ## Introduction
 
-**hapi-rate-limit** is a plugin for [hapi](http://hapijs.com) that enables rate limiting.
+**hapi-multi-rate-limit** is a plugin for [hapi](http://hapijs.com) that enables rate limiting.
 
 It relies on `cache` being defined in the server.
 
@@ -19,7 +19,7 @@ const server = Hapi.server({
     cache: { engine: require('catbox-memory'), name: 'memory' }
 });
 server.register({
-    plugin: require('hapi-rate-limit'),
+    plugin: require('hapi-multi-rate-limit'),
     options: {}
 });
 ```
@@ -31,18 +31,18 @@ Defaults are given here
 - `enabled`: `true` whether or not rate limiting is enabled at all. Set this to `false` in a route's config to bypass all rate limiting for that route
 - `userLimit`: `300` number of total requests a user can make per period.  Set to `false` to disable limiting requests per user.
 - `userCache`: Object with the following properties:
-    -  `segment`: `hapi-rate-limit-user` Name of the cache segment to use for storing user rate limit info
+    -  `segment`: `hapi-multi-rate-limit-user` Name of the cache segment to use for storing user rate limit info
     - `expiresIn`: `600000` Time (in milliseconds) of period for `userLimit`
 - `userAttribute`: `id` credentials attribute to use when determining distinct authenticated users
 - `userWhitelist`: `[]` array of users (as defined by `userAttribute` for whom to bypass rate limiting.  This is only applied to authenticated users, for ip whitelisting use `ipWhitelist`.
 - `addressOnly`: `false` if true, only consider user address when determining distinct authenticated users
 - `pathLimit`: `50` number of total requests that can be made on a given path per period.  Set to `false` to disable limiting requests per path.
 - `pathCache`: Object with the following properties:
-	- `segment`: `hapi-rate-limit-path` Name of the cache segment to use for storing path rate limit info
+	- `segment`: `hapi-multi-rate-limit-path` Name of the cache segment to use for storing path rate limit info
 	- `expiresIn`: `60000` Time (in milliseconds) of period for `pathLimit`
 - `userPathLimit`: `false` number of total requests that can be made on a given path per user per period.  Set to `false` to disable limiting requests per path per user.
 - `userPathCache`: Object with the following properties:
-	- `segment`: `hapi-rate-limit-userPath` Name of the cache segment to use for storing userPath rate limit info
+	- `segment`: `hapi-multi-rate-limit-userPath` Name of the cache segment to use for storing userPath rate limit info
 	- `expiresIn`: `60000` Time (in milliseconds) of period for `userPathLimit`
 - `headers`: `true` Whether or not to include headers in responses
 - `ipWhitelist`: `[]` array of IPs for whom to bypass rate limiting.  Note that a whitelisted IP would also bypass restrictions an authenticated user would otherwise have.
@@ -87,7 +87,7 @@ For instance, to disable `pathLimit` for a route you would add this to its `conf
 
 ```javascript
     plugins: {
-        'hapi-rate-limit': {
+        'hapi-multi-rate-limit': {
             pathLimit: false
         }
     }
@@ -97,7 +97,7 @@ To disable all rate limiting for a route you woul add this to its `config` attri
 
 ```javascript
     plugins: {
-        'hapi-rate-limit': {
+        'hapi-multi-rate-limit': {
             enabled: false
         }
     }

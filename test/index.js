@@ -13,7 +13,7 @@ const timeout = promisify(setTimeout);
 const Hapi = require('hapi');
 const HapiRateLimit = require('../');
 
-describe('hapi-rate-limit', () => {
+describe('hapi-multi-rate-limit', () => {
 
     describe('defaults', () => {
 
