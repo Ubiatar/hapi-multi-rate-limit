@@ -1,5 +1,5 @@
 {
-  "name": "hapi-rate-limit",
+  "name": "hapi-multi-rate-limit",
   "version": "2.1.3",
   "description": "Rate limiting plugin for hapi",
   "main": "index.js",
@@ -9,22 +9,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wraithgar/hapi-rate-limit.git"
+    "url": "https://github.com/Ubiatar/hapi-multi-rate-limit.git"
   },
   "keywords": [
     "hapi",
     "rate",
     "limit"
   ],
-  "author": "Gar <gar+code@danger.computer>",
+  "author": "Domenico Pizzata <domenico.pizzata@ubiatar.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wraithgar/hapi-rate-limit/issues"
+    "url": "https://github.com/Ubiatar/hapi-multi-rate-limit/issues"
   },
   "pre-commit": [
     "test"
   ],
-  "homepage": "https://github.com/wraithgar/hapi-rate-limit#readme",
+  "homepage": "https://github.com/Ubiatar/hapi-multi-rate-limit#readme",
   "peerDependencies": {
     "hapi": ">=17.0.0"
   },

@@ -35,7 +35,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 addressOnly: true
             }
         },
@@ -53,7 +53,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 addressOnly: true,
                 userLimit: false,
                 userPathLimitSeconds: 50,
@@ -76,7 +76,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 userAttribute: 'name'
             }
         },
@@ -104,7 +104,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 userLimit: false
             }
         }
@@ -119,7 +119,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 headers: false
             }
         }
@@ -134,7 +134,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 pathLimit: false
             }
         }
@@ -149,7 +149,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 userPathLimit: false
             }
         }
@@ -164,7 +164,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 pathLimit: 50
             }
         }
@@ -179,7 +179,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 userPathLimitSeconds: 50,
                 userPathLimitMinutes: 50,
                 userPathLimitHours: 50,
@@ -200,7 +200,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 userPathLimitSeconds: 50,
                 userPathLimitMinutes: 50,
                 userPathLimitHours: 50,
@@ -218,7 +218,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 userLimit: false,
                 pathLimit: false
             }
@@ -237,7 +237,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 pathLimit: 2
             }
         }
@@ -252,7 +252,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 userPathLimitSeconds: 2,
                 userPathLimitMinutes: 2,
                 userPathLimitHours: 2,
@@ -270,7 +270,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 trustProxy: true
             }
         }
@@ -285,7 +285,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 ipWhitelist: ['127.0.0.1']
             }
         }
@@ -300,7 +300,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 userWhitelist: ['1']
             }
         },
@@ -318,7 +318,7 @@ module.exports = [{
             return request.path;
         },
         plugins: {
-            'hapi-rate-limit': {
+            'hapi-multi-rate-limit': {
                 enabled: false
             }
         }
