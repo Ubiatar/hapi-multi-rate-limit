@@ -56,7 +56,10 @@ describe('hapi-rate-limit', () => {
                 'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
                 'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset'
             ]);
-            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit', 'x-ratelimit-userpathremaining', 'x-ratelimit-userpathreset']);
+            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit-seconds', 'x-ratelimit-userpathremaining-seconds', 'x-ratelimit-userpathreset-seconds']);
+            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit-minutes', 'x-ratelimit-userpathremaining-minutes', 'x-ratelimit-userpathreset-minutes']);
+            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit-hours', 'x-ratelimit-userpathremaining-hours', 'x-ratelimit-userpathreset-hours']);
+            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit-days', 'x-ratelimit-userpathremaining-days', 'x-ratelimit-userpathreset-days']);
             expect(res.headers['x-ratelimit-pathlimit']).to.equal(50);
             expect(res.headers['x-ratelimit-pathremaining']).to.equal(49);
             expect(res.headers['x-ratelimit-pathreset']).to.be.a.number();
@@ -71,7 +74,10 @@ describe('hapi-rate-limit', () => {
                 'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
                 'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset'
             ]);
-            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit', 'x-ratelimit-userpathremaining', 'x-ratelimit-userpathreset']);
+            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit-seconds', 'x-ratelimit-userpathremaining-seconds', 'x-ratelimit-userpathreset-seconds']);
+            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit-minutes', 'x-ratelimit-userpathremaining-minutes', 'x-ratelimit-userpathreset-minutes']);
+            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit-hours', 'x-ratelimit-userpathremaining-hours', 'x-ratelimit-userpathreset-hours']);
+            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit-days', 'x-ratelimit-userpathremaining-days', 'x-ratelimit-userpathreset-days']);
             expect(res.headers['x-ratelimit-pathlimit']).to.equal(50);
             expect(res.headers['x-ratelimit-pathremaining']).to.equal(48);
             expect(res.headers['x-ratelimit-pathreset'] - pathReset).to.be.within(-100, 100);
@@ -120,17 +126,56 @@ describe('hapi-rate-limit', () => {
             expect(res.headers['x-ratelimit-userremaining']).to.equal(297);
         });
 
-        it('route configured addressOnly for userPathLimit', async () => {
+        it('route configured addressOnly for userPathLimitMinutes', async () => {
 
             let res;
             res = await server.inject({ method: 'GET', url: '/addressOnlyUserPathLimit?id=3' });
-            expect(res.headers['x-ratelimit-userpathremaining']).to.equal(49);
+            expect(res.headers['x-ratelimit-userpathremaining-minutes']).to.equal(49);
 
             res = await server.inject({ method: 'GET', url: '/addressOnlyUserPathLimit?id=3' });
-            expect(res.headers['x-ratelimit-userpathremaining']).to.equal(48);
+            expect(res.headers['x-ratelimit-userpathremaining-minutes']).to.equal(48);
 
             res = await server.inject({ method: 'GET', url: '/addressOnlyUserPathLimit?id=4' });
-            expect(res.headers['x-ratelimit-userpathremaining']).to.equal(47);
+            expect(res.headers['x-ratelimit-userpathremaining-minutes']).to.equal(47);
+        });
+
+        it('route configured addressOnly for userPathLimitSeconds', async () => {
+
+            let res;
+            res = await server.inject({ method: 'GET', url: '/addressOnlyUserPathLimit?id=3' });
+            expect(res.headers['x-ratelimit-userpathremaining-seconds']).to.equal(49);
+
+            res = await server.inject({ method: 'GET', url: '/addressOnlyUserPathLimit?id=3' });
+            expect(res.headers['x-ratelimit-userpathremaining-seconds']).to.equal(48);
+
+            res = await server.inject({ method: 'GET', url: '/addressOnlyUserPathLimit?id=4' });
+            expect(res.headers['x-ratelimit-userpathremaining-seconds']).to.equal(47);
+        });
+
+        it('route configured addressOnly for userPathLimitHours', async () => {
+
+            let res;
+            res = await server.inject({ method: 'GET', url: '/addressOnlyUserPathLimit?id=3' });
+            expect(res.headers['x-ratelimit-userpathremaining-hours']).to.equal(49);
+
+            res = await server.inject({ method: 'GET', url: '/addressOnlyUserPathLimit?id=3' });
+            expect(res.headers['x-ratelimit-userpathremaining-hours']).to.equal(48);
+
+            res = await server.inject({ method: 'GET', url: '/addressOnlyUserPathLimit?id=4' });
+            expect(res.headers['x-ratelimit-userpathremaining-hours']).to.equal(47);
+        });
+
+        it('route configured addressOnly for userPathLimitDays', async () => {
+
+            let res;
+            res = await server.inject({ method: 'GET', url: '/addressOnlyUserPathLimit?id=3' });
+            expect(res.headers['x-ratelimit-userpathremaining-days']).to.equal(49);
+
+            res = await server.inject({ method: 'GET', url: '/addressOnlyUserPathLimit?id=3' });
+            expect(res.headers['x-ratelimit-userpathremaining-days']).to.equal(48);
+
+            res = await server.inject({ method: 'GET', url: '/addressOnlyUserPathLimit?id=4' });
+            expect(res.headers['x-ratelimit-userpathremaining-days']).to.equal(47);
         });
 
         it('route disabled pathLimit', async () => {
@@ -147,12 +192,36 @@ describe('hapi-rate-limit', () => {
             expect(res.headers).to.not.include(['x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset']);
         });
 
-        it('route disabled userPathLimit', async () => {
+        it('route disabled userPathLimitSeconds', async () => {
 
             const res = await server.inject({ method: 'GET', url: '/noUserPathLimit' });
             expect(res.headers).to.include(['x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset']);
             expect(res.headers).to.include(['x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset']);
-            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit', 'x-ratelimit-userpathremaining', 'x-ratelimit-userpathreset']);
+            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit-seconds', 'x-ratelimit-userpathremaining-seconds', 'x-ratelimit-userpathreset-seconds']);
+        });
+
+        it('route disabled userPathLimitMinutes', async () => {
+
+            const res = await server.inject({ method: 'GET', url: '/noUserPathLimit' });
+            expect(res.headers).to.include(['x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset']);
+            expect(res.headers).to.include(['x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset']);
+            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit-minutes', 'x-ratelimit-userpathremaining-minutes', 'x-ratelimit-userpathreset-minutes']);
+        });
+
+        it('route disabled userPathLimitHours', async () => {
+
+            const res = await server.inject({ method: 'GET', url: '/noUserPathLimit' });
+            expect(res.headers).to.include(['x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset']);
+            expect(res.headers).to.include(['x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset']);
+            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit-hours', 'x-ratelimit-userpathremaining-hours', 'x-ratelimit-userpathreset-hours']);
+        });
+
+        it('route disabled userPathLimitDays', async () => {
+
+            const res = await server.inject({ method: 'GET', url: '/noUserPathLimit' });
+            expect(res.headers).to.include(['x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset']);
+            expect(res.headers).to.include(['x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset']);
+            expect(res.headers).to.not.include(['x-ratelimit-userpathlimit-days', 'x-ratelimit-userpathremaining-days', 'x-ratelimit-userpathreset-days']);
         });
 
         it('route configured pathLimit', async () => {
@@ -192,51 +261,201 @@ describe('hapi-rate-limit', () => {
             expect(res.statusCode).to.equal(429);
         });
 
-        it('route configured userPathLimit', async () => {
+        it('route configured userPathLimitMinutes', async () => {
 
             let res;
             res = await server.inject({ method: 'GET', url: '/setUserPathLimit?id=1' });
-            const userPathReset = res.headers['x-ratelimit-userpathreset'];
+            const userPathReset = res.headers['x-ratelimit-userpathreset-minutes'];
             expect(res.headers).to.include([
                 'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
                 'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset',
-                'x-ratelimit-userpathlimit', 'x-ratelimit-userpathremaining', 'x-ratelimit-userpathreset'
+                'x-ratelimit-userpathlimit-minutes', 'x-ratelimit-userpathremaining-minutes', 'x-ratelimit-userpathreset-minutes'
             ]);
-            expect(res.headers['x-ratelimit-userpathlimit']).to.equal(50);
-            expect(res.headers['x-ratelimit-userpathremaining']).to.equal(49);
-            expect(res.headers['x-ratelimit-userpathreset']).to.be.a.number();
-            expect(res.headers['x-ratelimit-userpathreset'] - Date.now()).to.be.within(59900, 60100);
+            expect(res.headers['x-ratelimit-userpathlimit-minutes']).to.equal(50);
+            expect(res.headers['x-ratelimit-userpathremaining-minutes']).to.equal(49);
+            expect(res.headers['x-ratelimit-userpathreset-minutes']).to.be.a.number();
+            expect(res.headers['x-ratelimit-userpathreset-minutes'] - Date.now()).to.be.within(59900, 60100);
 
             res = await server.inject({ method: 'GET', url: '/setUserPathLimit2?id=1' });
             expect(res.headers).to.include([
                 'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
                 'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset',
-                'x-ratelimit-userpathlimit', 'x-ratelimit-userpathremaining', 'x-ratelimit-userpathreset'
+                'x-ratelimit-userpathlimit-minutes', 'x-ratelimit-userpathremaining-minutes', 'x-ratelimit-userpathreset-minutes'
             ]);
-            expect(res.headers['x-ratelimit-userpathlimit']).to.equal(50);
-            expect(res.headers['x-ratelimit-userpathremaining']).to.equal(49);
-            expect(res.headers['x-ratelimit-userpathreset']).to.be.a.number();
-            expect(res.headers['x-ratelimit-userpathreset'] - Date.now()).to.be.within(59900, 60100);
+            expect(res.headers['x-ratelimit-userpathlimit-minutes']).to.equal(50);
+            expect(res.headers['x-ratelimit-userpathremaining-minutes']).to.equal(49);
+            expect(res.headers['x-ratelimit-userpathreset-minutes']).to.be.a.number();
+            expect(res.headers['x-ratelimit-userpathreset-minutes'] - Date.now()).to.be.within(59900, 60100);
 
             res = await server.inject({ method: 'GET', url: '/setUserPathLimit?id=1' });
             expect(res.headers).to.include([
                 'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
                 'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset',
-                'x-ratelimit-userpathlimit', 'x-ratelimit-userpathremaining', 'x-ratelimit-userpathreset'
+                'x-ratelimit-userpathlimit-minutes', 'x-ratelimit-userpathremaining-minutes', 'x-ratelimit-userpathreset-minutes'
             ]);
-            expect(res.headers['x-ratelimit-userpathlimit']).to.equal(50);
-            expect(res.headers['x-ratelimit-userpathremaining']).to.equal(48);
-            expect(res.headers['x-ratelimit-userpathreset'] - userPathReset).to.be.within(-100, 100);
+            expect(res.headers['x-ratelimit-userpathlimit-minutes']).to.equal(50);
+            expect(res.headers['x-ratelimit-userpathremaining-minutes']).to.equal(48);
+            expect(res.headers['x-ratelimit-userpathreset-minutes'] - userPathReset).to.be.within(-100, 100);
         });
 
-        it('runs out of userPathLimit', async () => {
+        it('route configured userPathLimitSeconds', async () => {
+
+            let res;
+            res = await server.inject({ method: 'GET', url: '/setUserPathLimit?id=1' });
+            const userPathReset = res.headers['x-ratelimit-userpathreset-seconds'];
+            expect(res.headers).to.include([
+                'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
+                'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset',
+                'x-ratelimit-userpathlimit-seconds', 'x-ratelimit-userpathremaining-seconds', 'x-ratelimit-userpathreset-seconds'
+            ]);
+            expect(res.headers['x-ratelimit-userpathlimit-seconds']).to.equal(50);
+            expect(res.headers['x-ratelimit-userpathremaining-seconds']).to.equal(49);
+            expect(res.headers['x-ratelimit-userpathreset-seconds']).to.be.a.number();
+            expect(res.headers['x-ratelimit-userpathreset-seconds'] - Date.now()).to.be.within(900, 1100);
+
+            res = await server.inject({ method: 'GET', url: '/setUserPathLimit2?id=1' });
+            expect(res.headers).to.include([
+                'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
+                'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset',
+                'x-ratelimit-userpathlimit-seconds', 'x-ratelimit-userpathremaining-seconds', 'x-ratelimit-userpathreset-seconds'
+            ]);
+            expect(res.headers['x-ratelimit-userpathlimit-seconds']).to.equal(50);
+            expect(res.headers['x-ratelimit-userpathremaining-seconds']).to.equal(49);
+            expect(res.headers['x-ratelimit-userpathreset-seconds']).to.be.a.number();
+            expect(res.headers['x-ratelimit-userpathreset-seconds'] - Date.now()).to.be.within(900, 1100);
+
+            res = await server.inject({ method: 'GET', url: '/setUserPathLimit?id=1' });
+            expect(res.headers).to.include([
+                'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
+                'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset',
+                'x-ratelimit-userpathlimit-seconds', 'x-ratelimit-userpathremaining-seconds', 'x-ratelimit-userpathreset-seconds'
+            ]);
+            expect(res.headers['x-ratelimit-userpathlimit-seconds']).to.equal(50);
+            expect(res.headers['x-ratelimit-userpathremaining-seconds']).to.equal(48);
+            expect(res.headers['x-ratelimit-userpathreset-seconds'] - userPathReset).to.be.within(-100, 100);
+        });
+
+        it('route configured userPathLimitHours', async () => {
+
+            let res;
+            res = await server.inject({ method: 'GET', url: '/setUserPathLimit?id=1' });
+            const userPathReset = res.headers['x-ratelimit-userpathreset-hours'];
+            expect(res.headers).to.include([
+                'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
+                'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset',
+                'x-ratelimit-userpathlimit-hours', 'x-ratelimit-userpathremaining-hours', 'x-ratelimit-userpathreset-hours'
+            ]);
+            expect(res.headers['x-ratelimit-userpathlimit-hours']).to.equal(50);
+            expect(res.headers['x-ratelimit-userpathremaining-hours']).to.equal(49);
+            expect(res.headers['x-ratelimit-userpathreset-hours']).to.be.a.number();
+            expect(res.headers['x-ratelimit-userpathreset-hours'] - Date.now()).to.be.within(3599900, 3610000);
+
+            res = await server.inject({ method: 'GET', url: '/setUserPathLimit2?id=1' });
+            expect(res.headers).to.include([
+                'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
+                'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset',
+                'x-ratelimit-userpathlimit-hours', 'x-ratelimit-userpathremaining-hours', 'x-ratelimit-userpathreset-hours'
+            ]);
+            expect(res.headers['x-ratelimit-userpathlimit-hours']).to.equal(50);
+            expect(res.headers['x-ratelimit-userpathremaining-hours']).to.equal(49);
+            expect(res.headers['x-ratelimit-userpathreset-hours']).to.be.a.number();
+            expect(res.headers['x-ratelimit-userpathreset-hours'] - Date.now()).to.be.within(3599900, 3610000);
+
+            res = await server.inject({ method: 'GET', url: '/setUserPathLimit?id=1' });
+            expect(res.headers).to.include([
+                'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
+                'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset',
+                'x-ratelimit-userpathlimit-hours', 'x-ratelimit-userpathremaining-hours', 'x-ratelimit-userpathreset-hours'
+            ]);
+            expect(res.headers['x-ratelimit-userpathlimit-hours']).to.equal(50);
+            expect(res.headers['x-ratelimit-userpathremaining-hours']).to.equal(48);
+            expect(res.headers['x-ratelimit-userpathreset-hours'] - userPathReset).to.be.within(-100, 100);
+        });
+
+        it('route configured userPathLimitDays', async () => {
+
+            let res;
+            res = await server.inject({ method: 'GET', url: '/setUserPathLimit?id=1' });
+            const userPathReset = res.headers['x-ratelimit-userpathreset-days'];
+            expect(res.headers).to.include([
+                'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
+                'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset',
+                'x-ratelimit-userpathlimit-days', 'x-ratelimit-userpathremaining-days', 'x-ratelimit-userpathreset-days'
+            ]);
+            expect(res.headers['x-ratelimit-userpathlimit-days']).to.equal(50);
+            expect(res.headers['x-ratelimit-userpathremaining-days']).to.equal(49);
+            expect(res.headers['x-ratelimit-userpathreset-days']).to.be.a.number();
+            expect(res.headers['x-ratelimit-userpathreset-days'] - Date.now()).to.be.within(86399900, 87400000);
+
+            res = await server.inject({ method: 'GET', url: '/setUserPathLimit2?id=1' });
+            expect(res.headers).to.include([
+                'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
+                'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset',
+                'x-ratelimit-userpathlimit-days', 'x-ratelimit-userpathremaining-days', 'x-ratelimit-userpathreset-days'
+            ]);
+            expect(res.headers['x-ratelimit-userpathlimit-days']).to.equal(50);
+            expect(res.headers['x-ratelimit-userpathremaining-days']).to.equal(49);
+            expect(res.headers['x-ratelimit-userpathreset-days']).to.be.a.number();
+            expect(res.headers['x-ratelimit-userpathreset-days'] - Date.now()).to.be.within(86399900, 87400000);
+
+            res = await server.inject({ method: 'GET', url: '/setUserPathLimit?id=1' });
+            expect(res.headers).to.include([
+                'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
+                'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset',
+                'x-ratelimit-userpathlimit-days', 'x-ratelimit-userpathremaining-days', 'x-ratelimit-userpathreset-days'
+            ]);
+            expect(res.headers['x-ratelimit-userpathlimit-days']).to.equal(50);
+            expect(res.headers['x-ratelimit-userpathremaining-days']).to.equal(48);
+            expect(res.headers['x-ratelimit-userpathreset-days'] - userPathReset).to.be.within(-100, 100);
+        });
+
+        it('runs out of userPathLimitMinutes', async () => {
 
             let res;
             res = await server.inject({ method: 'GET', url: '/lowUserPathLimit' });
-            expect(res.headers['x-ratelimit-userpathremaining']).to.equal(1);
+            expect(res.headers['x-ratelimit-userpathremaining-minutes']).to.equal(1);
 
             res = await server.inject({ method: 'GET', url: '/lowUserPathLimit' });
-            expect(res.headers['x-ratelimit-userpathremaining']).to.equal(0);
+            expect(res.headers['x-ratelimit-userpathremaining-minutes']).to.equal(0);
+
+            res = await server.inject({ method: 'GET', url: '/lowUserPathLimit' });
+            expect(res.statusCode).to.equal(429);
+        });
+
+        it('runs out of userPathLimitSeconds', async () => {
+
+            let res;
+            res = await server.inject({ method: 'GET', url: '/lowUserPathLimit' });
+            expect(res.headers['x-ratelimit-userpathremaining-seconds']).to.equal(1);
+
+            res = await server.inject({ method: 'GET', url: '/lowUserPathLimit' });
+            expect(res.headers['x-ratelimit-userpathremaining-seconds']).to.equal(0);
+
+            res = await server.inject({ method: 'GET', url: '/lowUserPathLimit' });
+            expect(res.statusCode).to.equal(429);
+        });
+
+        it('runs out of userPathLimitHours', async () => {
+
+            let res;
+            res = await server.inject({ method: 'GET', url: '/lowUserPathLimit' });
+            expect(res.headers['x-ratelimit-userpathremaining-hours']).to.equal(1);
+
+            res = await server.inject({ method: 'GET', url: '/lowUserPathLimit' });
+            expect(res.headers['x-ratelimit-userpathremaining-hours']).to.equal(0);
+
+            res = await server.inject({ method: 'GET', url: '/lowUserPathLimit' });
+            expect(res.statusCode).to.equal(429);
+        });
+
+        it('runs out of userPathLimitDays', async () => {
+
+            let res;
+            res = await server.inject({ method: 'GET', url: '/lowUserPathLimit' });
+            expect(res.headers['x-ratelimit-userpathremaining-days']).to.equal(1);
+
+            res = await server.inject({ method: 'GET', url: '/lowUserPathLimit' });
+            expect(res.headers['x-ratelimit-userpathremaining-days']).to.equal(0);
 
             res = await server.inject({ method: 'GET', url: '/lowUserPathLimit' });
             expect(res.statusCode).to.equal(429);
@@ -248,7 +467,10 @@ describe('hapi-rate-limit', () => {
             expect(res.headers).to.not.include([
                 'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
                 'x-ratelimit-userlimit', 'x-ratelimit-userremaining', 'x-ratelimit-userreset',
-                'x-ratelimit-userpathlimit', 'x-ratelimit-userpathremaining', 'x-ratelimit-userpathreset'
+                'x-ratelimit-userpathlimit-seconds', 'x-ratelimit-userpathremaining-seconds', 'x-ratelimit-userpathreset-seconds',
+                'x-ratelimit-userpathlimit-minutes', 'x-ratelimit-userpathremaining-minutes', 'x-ratelimit-userpathreset-minutes',
+                'x-ratelimit-userpathlimit-hours', 'x-ratelimit-userpathremaining-hours', 'x-ratelimit-userpathreset-hours',
+                'x-ratelimit-userpathlimit-days', 'x-ratelimit-userpathremaining-days', 'x-ratelimit-userpathreset-days'
             ]);
         });
 
@@ -262,7 +484,10 @@ describe('hapi-rate-limit', () => {
             ]);
             expect(res.headers).to.not.include([
                 'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
-                'x-ratelimit-userpathlimit', 'x-ratelimit-userpathremaining', 'x-ratelimit-userpathreset'
+                'x-ratelimit-userpathlimit-seconds', 'x-ratelimit-userpathremaining-seconds', 'x-ratelimit-userpathreset-seconds',
+                'x-ratelimit-userpathlimit-minutes', 'x-ratelimit-userpathremaining-minutes', 'x-ratelimit-userpathreset-minutes',
+                'x-ratelimit-userpathlimit-hours', 'x-ratelimit-userpathremaining-hours', 'x-ratelimit-userpathreset-hours',
+                'x-ratelimit-userpathlimit-days', 'x-ratelimit-userpathremaining-days', 'x-ratelimit-userpathreset-days'
             ]);
 
             const userCount = res.headers['x-ratelimit-userremaining'];
@@ -280,7 +505,10 @@ describe('hapi-rate-limit', () => {
             ]);
             expect(res.headers).to.not.include([
                 'x-ratelimit-pathlimit', 'x-ratelimit-pathremaining', 'x-ratelimit-pathreset',
-                'x-ratelimit-userpathlimit', 'x-ratelimit-userpathremaining', 'x-ratelimit-userpathreset'
+                'x-ratelimit-userpathlimit-seconds', 'x-ratelimit-userpathremaining-seconds', 'x-ratelimit-userpathreset-seconds',
+                'x-ratelimit-userpathlimit-minutes', 'x-ratelimit-userpathremaining-minutes', 'x-ratelimit-userpathreset-minutes',
+                'x-ratelimit-userpathlimit-hours', 'x-ratelimit-userpathremaining-hours', 'x-ratelimit-userpathreset-hours',
+                'x-ratelimit-userpathlimit-days', 'x-ratelimit-userpathremaining-days', 'x-ratelimit-userpathreset-days'
             ]);
         });
 
@@ -466,6 +694,10 @@ describe('hapi-rate-limit', () => {
                     userLimit: 2,
                     userCache: {
                         expiresIn: 500
+                    },
+                    userPathLimitMinutes: 2,
+                    userPathCacheMinutes: {
+                        expiresIn: 500
                     }
                 }
             }]);
@@ -490,6 +722,25 @@ describe('hapi-rate-limit', () => {
 
             expect(res.headers['x-ratelimit-userremaining']).to.equal(1);
             expect(res.headers['x-ratelimit-userlimit']).to.equal(2);
+        });
+
+        it('runs out of configured userPathLimitMinutes', async () => {
+
+            let res;
+            res = await server.inject({ method: 'GET', url: '/auth' });
+            expect(res.headers['x-ratelimit-userpathremaining-minutes']).to.equal(1);
+            expect(res.headers['x-ratelimit-userpathlimit-minutes']).to.equal(2);
+
+            res = await server.inject({ method: 'GET', url: '/auth' });
+            expect(res.headers['x-ratelimit-userpathremaining-minutes']).to.equal(0);
+
+            res = await server.inject({ method: 'GET', url: '/auth' });
+            expect(res.statusCode).to.equal(429);
+            await timeout(1000);
+            res = await server.inject({ method: 'GET', url: '/auth' });
+
+            expect(res.headers['x-ratelimit-userpathremaining-minutes']).to.equal(1);
+            expect(res.headers['x-ratelimit-userpathlimit-minutes']).to.equal(2);
         });
 
         it('disabled path limit runs out of userLimit', async () => {

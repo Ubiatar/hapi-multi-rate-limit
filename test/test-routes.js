@@ -56,7 +56,10 @@ module.exports = [{
             'hapi-rate-limit': {
                 addressOnly: true,
                 userLimit: false,
-                userPathLimit: 50
+                userPathLimitSeconds: 50,
+                userPathLimitMinutes: 50,
+                userPathLimitHours: 50,
+                userPathLimitDays: 50
             }
         },
         auth: {
@@ -177,7 +180,10 @@ module.exports = [{
         },
         plugins: {
             'hapi-rate-limit': {
-                userPathLimit: 50
+                userPathLimitSeconds: 50,
+                userPathLimitMinutes: 50,
+                userPathLimitHours: 50,
+                userPathLimitDays: 50
             }
         },
         auth: {
@@ -195,7 +201,10 @@ module.exports = [{
         },
         plugins: {
             'hapi-rate-limit': {
-                userPathLimit: 50
+                userPathLimitSeconds: 50,
+                userPathLimitMinutes: 50,
+                userPathLimitHours: 50,
+                userPathLimitDays: 50
             }
         }
     }
@@ -210,7 +219,6 @@ module.exports = [{
         },
         plugins: {
             'hapi-rate-limit': {
-                userPathLimit: 50,
                 userLimit: false,
                 pathLimit: false
             }
@@ -245,7 +253,10 @@ module.exports = [{
         },
         plugins: {
             'hapi-rate-limit': {
-                userPathLimit: 2
+                userPathLimitSeconds: 2,
+                userPathLimitMinutes: 2,
+                userPathLimitHours: 2,
+                userPathLimitDays: 2
             }
         }
     }
