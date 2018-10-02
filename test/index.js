@@ -11,7 +11,7 @@ const { promisify } = require('util');
 const timeout = promisify(setTimeout);
 
 const Hapi = require('hapi');
-const HapiRateLimit = require('../');
+const HapiMultiRateLimit = require('../');
 
 describe('hapi-multi-rate-limit', () => {
 
@@ -37,7 +37,7 @@ describe('hapi-multi-rate-limit', () => {
             });
             server.auth.strategy('trusty', 'trusty');
 
-            await server.register(HapiRateLimit);
+            await server.register(HapiMultiRateLimit);
 
             server.route(require('./test-routes'));
             await server.initialize();
@@ -578,7 +578,7 @@ describe('hapi-multi-rate-limit', () => {
             server.auth.strategy('trusty', 'trusty');
 
             await server.register([{
-                plugin: HapiRateLimit,
+                plugin: HapiMultiRateLimit,
                 options: {
                     userLimit: 2,
                     userCache: {
@@ -643,7 +643,7 @@ describe('hapi-multi-rate-limit', () => {
             server.auth.strategy('trusty', 'trusty');
 
             await server.register([{
-                plugin: HapiRateLimit,
+                plugin: HapiMultiRateLimit,
                 options: {
                     userLimit: 1,
                     pathLimit: 1,
@@ -689,7 +689,7 @@ describe('hapi-multi-rate-limit', () => {
             server.auth.strategy('trusty', 'trusty');
 
             await server.register([{
-                plugin: HapiRateLimit,
+                plugin: HapiMultiRateLimit,
                 options: {
                     userLimit: 2,
                     userCache: {
@@ -778,7 +778,7 @@ describe('hapi-multi-rate-limit', () => {
             server.auth.strategy('trusty', 'trusty');
 
             await server.register([{
-                plugin: HapiRateLimit,
+                plugin: HapiMultiRateLimit,
                 options: {
                     getIpFromProxyHeader: (xForwardedFor) => xForwardedFor.split(',')[1] // Take always the second one
                 }
